@@ -1,0 +1,62 @@
+[
+  {
+    "id": "forum-paris",
+    "title": "SGF Investment Forum",
+    "category": "Forum · Paris",
+    "dateLabel": "15 septembre 2026 · 09h00 – 18h00",
+    "badgeDay": "15",
+    "badgeMonth": "Sep 2026",
+    "start": "20260915T090000",
+    "end": "20260915T180000",
+    "location": "Paris 17e",
+    "description": "Forum SGF : acquisition, investissement, panels sectoriels et networking.",
+    "formats": ["Présentiel", "Teams Live"],
+    "buttonLabel": "Réserver ma place",
+    "visible": true
+  },
+  {
+    "id": "meet-benin",
+    "title": "Entrepreneurs Bénin × SGF",
+    "category": "Networking · Cotonou",
+    "dateLabel": "22 octobre 2026 · 10h00 – 17h00",
+    "badgeDay": "22",
+    "badgeMonth": "Oct 2026",
+    "start": "20261022T100000",
+    "end": "20261022T170000",
+    "location": "Cotonou",
+    "description": "Rencontre SGF avec entrepreneurs, institutions et partenaires en Afrique de l’Ouest.",
+    "formats": ["Présentiel", "Google Meet"],
+    "buttonLabel": "Réserver ma place",
+    "visible": true
+  },
+  {
+    "id": "webinar-holding",
+    "title": "Finance d’entreprise & holdings en 2026",
+    "category": "Webinaire · Online",
+    "dateLabel": "05 novembre 2026 · 14h00 – 16h30",
+    "badgeDay": "05",
+    "badgeMonth": "Nov 2026",
+    "start": "20261105T140000",
+    "end": "20261105T163000",
+    "location": "Microsoft Teams / Google Meet",
+    "description": "Webinaire SGF sur la structuration de holdings et le financement d’acquisitions.",
+    "formats": ["Microsoft Teams", "Google Meet"],
+    "buttonLabel": "Rejoindre",
+    "visible": true
+  },
+  {
+    "id": "annual-gathering",
+    "title": "SGF Annual Gathering 2026",
+    "category": "Soirée annuelle · Invitation",
+    "dateLabel": "12 décembre 2026 · 19h30 – 00h00",
+    "badgeDay": "12",
+    "badgeMonth": "Déc 2026",
+    "start": "20261212T193000",
+    "end": "20261213T000000",
+    "location": "Paris · Sur invitation",
+    "description": "Soirée annuelle SGF réservée aux partenaires, investisseurs et filiales.",
+    "formats": ["Sur invitation"],
+    "buttonLabel": "Demander une invitation",
+    "visible": true
+  }
+]
