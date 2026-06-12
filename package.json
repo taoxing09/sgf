@@ -1,8 +1,8 @@
 {
-  "name": "sgf-group-v9-production-admin",
-  "version": "9.0.0",
+  "name": "sgf-group-v12-wow-mobile",
+  "version": "12.0.0",
   "private": true,
-  "description": "Site SGF Group premium avec back-office événements renforcé.",
+  "description": "Site SGF France premium V12 avec responsive mobile corrige, SEO, portail France Benin et back-office evenements.",
   "main": "api/server.js",
   "scripts": {
     "start": "node api/server.js",

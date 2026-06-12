@@ -1,20 +1,21 @@
-# SGF Group — V9 Production Admin
+# SGF Group V11, Wow Production
 
-Version V9 basée sur l'esprit **V5 Motion** : premium, fluide, corporate, avec back-office événements renforcé.
+Version orientée présentation client et production test.
 
-## Contenu
+## Ce qui a été amélioré
 
-- Site public premium SGF France / SGF Bénin
-- Footer légal SGF France : SIREN, SIRET, capital, RCS, APE, siège social
-- Événements dynamiques depuis API
-- Modal de réservation événement avec inscription persistée côté serveur
-- Formulaire de demande de rendez-vous
-- Back-office `admin.html` avec connexion
-- CRUD événements complet via API
-- Inscriptions exportables en CSV
-- Backend Node/Express prêt pour déploiement
+- Direction artistique plus premium, plus immersive et plus fluide.
+- Retour vers l'esprit V5 Motion, avec des animations moins lourdes.
+- Logo officiel SGF France intégré dans le header, le footer et l'admin.
+- Sélection France ou Bénin visible aussi sur mobile.
+- Changement France ou Bénin beaucoup plus visible : couleurs, textes, secteurs et portail.
+- Transitions de texte plus fluides au changement de territoire.
+- Textes réécrits pour SGF, plus corporate, plus crédibles, moins génériques.
+- SEO renforcé : title, description, Open Graph, Twitter Card, canonical, JSON LD Organization.
+- Footer légal avec capital social, SIREN, SIRET, RCS, APE et siège.
+- Back-office événements conservé : connexion admin, CRUD, publication ou brouillon, inscriptions, export CSV.
 
-## Lancer en local
+## Tester en local
 
 ```bash
 npm install
@@ -24,59 +25,43 @@ npm start
 
 Puis ouvrir :
 
-- Site public : http://localhost:3000
-- Admin : http://localhost:3000/admin.html
+```txt
+http://localhost:3000
+http://localhost:3000/admin.html
+```
 
-Mot de passe admin local par défaut si `.env` non configuré : `changeme-sgf-admin`
-
-⚠️ À changer impérativement avant mise en production.
-
-## Variables d'environnement importantes
+Le mot de passe admin se règle dans `.env` avec :
 
 ```env
-PORT=3000
+ADMIN_PASSWORD=VotreMotDePasse
+SESSION_SECRET=un-secret-long-et-aleatoire
+```
+
+Après modification du `.env`, relancer le serveur.
+
+## Déployer pour test
+
+Le plus simple : GitHub puis Render.
+
+Build command :
+
+```bash
+npm install
+```
+
+Start command :
+
+```bash
+npm start
+```
+
+Variables d'environnement à ajouter sur Render :
+
+```env
+ADMIN_PASSWORD=VotreMotDePasseFort
+SESSION_SECRET=un-secret-long-et-aleatoire
 CONTACT_EMAIL=contact.sgffrance@gmail.com
-ADMIN_PASSWORD=mot-de-passe-fort
-SESSION_SECRET=secret-long-aleatoire
-SENDGRID_API_KEY=
-SENDGRID_FROM=no-reply@sgf-group.fr
 DATA_DIR=./data
 ```
 
-## API événements
-
-Public :
-
-- `GET /api/events`
-- `POST /api/event-registrations`
-- `POST /api/booking`
-
-Admin :
-
-- `POST /api/admin/login`
-- `GET /api/admin/events`
-- `POST /api/admin/events`
-- `PATCH /api/admin/events/:id`
-- `DELETE /api/admin/events/:id`
-- `GET /api/admin/registrations`
-- `GET /api/admin/registrations.csv`
-
-## Important pour Render
-
-Le backend fonctionne sur Render, mais il ne faut pas considérer Render Free comme une vraie production avec persistance fichier.
-
-Pour une production propre :
-
-1. Front public sur Cloudflare Pages / Netlify / Vercel / Render Static Site.
-2. API sur Render Starter ou VPS.
-3. Données dans Supabase, Neon PostgreSQL ou une base persistante.
-
-La V9 persiste actuellement les événements dans `data/events.json` et les inscriptions dans `data/registrations.json`. C'est bien pour une démo, un VPS ou un serveur avec disque persistant. Ce n'est pas idéal sur Render Free.
-
-## Recommandation finale
-
-Pour SGF :
-
-- Présenter cette V9 comme prototype premium administrable.
-- Livrer en production avec une base externe type Supabase/Neon ou avec un hébergement serveur persistant.
-- Configurer Microsoft Bookings pour les rendez-vous Teams réels.
+Pour une vraie production, utiliser une base persistante au lieu du fichier `data/events.json`.
