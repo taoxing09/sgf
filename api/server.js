@@ -1,6 +1,6 @@
-require('dotenv').config();
-const fs = require('fs/promises');
 const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
+const fs = require('fs/promises');
 const crypto = require('crypto');
 const express = require('express');
 const cors = require('cors');
@@ -126,17 +126,17 @@ function csvEscape(value = '') {
 }
 
 const defaultEvents = [
-  { id: 'forum-paris', title: 'SGF Investment Forum', category: 'Forum · Paris', dateLabel: '15 septembre 2026 · 09h00 – 18h00', badgeDay: '15', badgeMonth: 'Sep 2026', start: '20260915T090000', end: '20260915T180000', location: 'Paris 17e', description: 'Forum SGF : acquisition, investissement, panels sectoriels et networking.', formats: ['Présentiel', 'Teams Live'], buttonLabel: 'Réserver ma place', visible: true, featured: true, capacity: 120 },
-  { id: 'meet-benin', title: 'Entrepreneurs Bénin × SGF', category: 'Networking · Cotonou', dateLabel: '22 octobre 2026 · 10h00 – 17h00', badgeDay: '22', badgeMonth: 'Oct 2026', start: '20261022T100000', end: '20261022T170000', location: 'Cotonou', description: 'Rencontre SGF avec entrepreneurs, institutions et partenaires en Afrique de l’Ouest.', formats: ['Présentiel', 'Google Meet'], buttonLabel: 'Réserver ma place', visible: true, capacity: 180 },
-  { id: 'webinar-holding', title: 'Finance d’entreprise & holdings en 2026', category: 'Webinaire · Online', dateLabel: '05 novembre 2026 · 14h00 – 16h30', badgeDay: '05', badgeMonth: 'Nov 2026', start: '20261105T140000', end: '20261105T163000', location: 'Microsoft Teams / Google Meet', description: 'Webinaire SGF sur la structuration de holdings et le financement d’acquisitions.', formats: ['Microsoft Teams', 'Google Meet'], buttonLabel: 'Rejoindre', visible: true, capacity: 500 },
-  { id: 'annual-gathering', title: 'SGF Annual Gathering 2026', category: 'Soirée annuelle · Invitation', dateLabel: '12 décembre 2026 · 19h30 – 00h00', badgeDay: '12', badgeMonth: 'Déc 2026', start: '20261212T193000', end: '20261213T000000', location: 'Paris · Sur invitation', description: 'Soirée annuelle SGF réservée aux partenaires, investisseurs et filiales.', formats: ['Sur invitation'], buttonLabel: 'Demander une invitation', visible: true, capacity: 80 }
+  { id: 'forum-paris', title: 'SGF Investment Forum', category: 'Forum, Paris', dateLabel: '15 septembre 2026, 09h00 à 18h00', badgeDay: '15', badgeMonth: 'Sep 2026', start: '20260915T090000', end: '20260915T180000', location: 'Paris 17e', description: 'Forum SGF dédié aux acquisitions, aux secteurs stratégiques, au networking et à la présentation des premières orientations du groupe.', formats: ['Présentiel', 'Teams Live'], buttonLabel: 'Réserver ma place', visible: true, featured: true, capacity: 120 },
+  { id: 'meet-benin', title: 'Entrepreneurs Bénin × SGF', category: 'Networking, Cotonou', dateLabel: '22 octobre 2026, 10h00 à 17h00', badgeDay: '22', badgeMonth: 'Oct 2026', start: '20261022T100000', end: '20261022T170000', location: 'Cotonou', description: 'Rencontre d’affaires entre SGF Bénin, entrepreneurs, institutions et partenaires en Afrique de l’Ouest.', formats: ['Présentiel', 'Google Meet'], buttonLabel: 'Réserver ma place', visible: true, capacity: 180 },
+  { id: 'webinar-holding', title: 'Finance d’entreprise et holdings en 2026', category: 'Webinaire, online', dateLabel: '05 novembre 2026, 14h00 à 16h30', badgeDay: '05', badgeMonth: 'Nov 2026', start: '20261105T140000', end: '20261105T163000', location: 'Microsoft Teams / Google Meet', description: 'Webinaire sur la structuration de holdings, la gouvernance financière, la formation et le financement des acquisitions.', formats: ['Microsoft Teams', 'Google Meet'], buttonLabel: 'Rejoindre', visible: true, capacity: 500 },
+  { id: 'annual-gathering', title: 'SGF Annual Gathering 2026', category: 'Soirée annuelle', dateLabel: '12 décembre 2026, 19h30 à 00h00', badgeDay: '12', badgeMonth: 'Déc 2026', start: '20261212T193000', end: '20261213T000000', location: 'Paris, sur invitation', description: 'Soirée annuelle SGF réservée aux partenaires, investisseurs et filiales.', formats: ['Sur invitation'], buttonLabel: 'Demander une invitation', visible: true, capacity: 80 }
 ].map(normalizeEvent);
 
-app.get('/api/health', (_, res) => res.json({ ok: true, service: 'SGF Group V9', storage: dataDir }));
+app.get('/api/health', (_, res) => res.json({ ok: true, service: 'SGF Group V12', storage: dataDir }));
 
 app.post('/api/admin/login', (req, res) => {
-  const password = String(req.body?.password || '');
-  if (!password || password !== adminPassword) return res.status(401).json({ ok: false, error: 'Mot de passe incorrect.' });
+  const password = String(req.body?.password || '').trim();
+  if (!password || password !== String(adminPassword).trim()) return res.status(401).json({ ok: false, error: 'Mot de passe incorrect.' });
   return res.json({ ok: true, token: signToken(), expiresIn: '8h' });
 });
 
@@ -205,7 +205,7 @@ app.post('/api/event-registrations', async (req, res) => {
   ].join('\n');
 
   if (process.env.SENDGRID_API_KEY && process.env.SENDGRID_FROM) {
-    await sendgrid.send({ to: contactEmail, from: process.env.SENDGRID_FROM, subject: `Inscription événement SGF — ${event.title}`, text, replyTo: email });
+    await sendgrid.send({ to: contactEmail, from: process.env.SENDGRID_FROM, subject: `Inscription événement SGF, ${event.title}`, text, replyTo: email });
   } else {
     console.log(text);
   }
@@ -232,9 +232,9 @@ app.post('/api/booking', async (req, res) => {
   const { name, email, phone, company, topic, format, message } = req.body || {};
   if (!name || !email || !topic) return res.status(400).json({ ok: false, error: 'Nom, email et objet obligatoires.' });
   const text = ['Nouvelle demande de rendez-vous SGF Group', '', `Nom : ${name}`, `Entreprise : ${company || '-'}`, `Email : ${email}`, `Téléphone : ${phone || '-'}`, `Objet : ${topic}`, `Format souhaité : ${format || '-'}`, '', `Message : ${message || '-'}`].join('\n');
-  if (process.env.SENDGRID_API_KEY && process.env.SENDGRID_FROM) await sendgrid.send({ to: contactEmail, from: process.env.SENDGRID_FROM, subject: `Demande de rendez-vous SGF — ${topic}`, text, replyTo: email });
+  if (process.env.SENDGRID_API_KEY && process.env.SENDGRID_FROM) await sendgrid.send({ to: contactEmail, from: process.env.SENDGRID_FROM, subject: `Demande de rendez-vous SGF, ${topic}`, text, replyTo: email });
   else console.log(text);
   res.json({ ok: true });
 });
 
-app.listen(port, () => console.log(`SGF Group V9 running on http://localhost:${port}`));
+app.listen(port, () => console.log(`SGF Group V11 running on http://localhost:${port}`));
