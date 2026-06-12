@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://sgf-group.fr/sitemap.xml

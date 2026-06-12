@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Administration — Événements SGF Group</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,200;0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
+  <link rel="icon" href="assets/sgf-mark.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles/admin.css" />
+</head>
+<body>
+  <div class="admin-shell">
+    <aside class="admin-sidebar">
+      <a class="admin-brand" href="index.html" aria-label="Retour au site SGF Group">
+        <img src="assets/sgf-mark.svg" alt="" />
+        <span><strong>SGF</strong><small>Admin Events</small></span>
+      </a>
+      <nav aria-label="Navigation admin">
+        <button class="nav-chip is-active" type="button">Événements</button>
+        <button class="nav-chip" type="button" data-refresh-registrations>Inscriptions</button>
+      </nav>
+      <div class="admin-status">
+        <span data-auth-status>Non connecté</span>
+        <small data-server-status>Connexion serveur en attente…</small>
+      </div>
+      <button class="ghost-button" type="button" data-logout>Déconnexion</button>
+    </aside>
+
+    <main class="admin-main">
+      <header class="admin-header">
+        <div>
+          <p class="eyebrow">Back-office SGF Group</p>
+          <h1>Gestion autonome des événements.</h1>
+          <p>Création, modification, publication, suppression et suivi des inscriptions depuis une interface simple.</p>
+        </div>
+        <div class="header-actions">
+          <button class="soft-button" type="button" data-new-event>Nouvel événement</button>
+          <button class="primary-button" type="button" data-export-json>Exporter JSON</button>
+        </div>
+      </header>
+
+      <section class="dashboard-grid">
+        <article class="metric-card"><span>Événements</span><strong data-count-events>0</strong><small>Total administré</small></article>
+        <article class="metric-card"><span>Publiés</span><strong data-count-visible>0</strong><small>Visibles sur le site</small></article>
+        <article class="metric-card"><span>Inscriptions</span><strong data-count-registrations>0</strong><small>Demandes reçues</small></article>
+      </section>
+
+      <section class="workspace">
+        <div class="panel event-list-panel">
+          <div class="panel-head">
+            <h2>Liste des événements</h2>
+            <small data-list-hint>Sélectionne un événement</small>
+          </div>
+          <div class="event-list" data-event-list></div>
+        </div>
+
+        <form class="panel event-form-panel" data-event-form>
+          <div class="panel-head split">
+            <div>
+              <h2 data-form-title>Créer un événement</h2>
+              <small>Les brouillons restent invisibles sur le site public.</small>
+            </div>
+            <label class="switch-line">
+              <input type="checkbox" name="visible" checked />
+              <span>Publié</span>
+            </label>
+          </div>
+
+          <input type="hidden" name="id" />
+
+          <div class="form-grid two">
+            <label>Titre<input name="title" required placeholder="SGF Investment Forum" /></label>
+            <label>Catégorie<input name="category" placeholder="Forum · Paris" /></label>
+          </div>
+
+          <label>Date affichée<input name="dateLabel" required placeholder="15 septembre 2026 · 09h00 – 18h00" /></label>
+
+          <div class="form-grid four">
+            <label>Jour badge<input name="badgeDay" placeholder="15" maxlength="2" /></label>
+            <label>Mois badge<input name="badgeMonth" placeholder="Sep 2026" /></label>
+            <label>Début ICS<input name="start" placeholder="20260915T090000" /></label>
+            <label>Fin ICS<input name="end" placeholder="20260915T180000" /></label>
+          </div>
+
+          <div class="form-grid two">
+            <label>Lieu<input name="location" placeholder="Paris 17e / Teams" /></label>
+            <label>Capacité<input name="capacity" type="number" min="0" placeholder="120" /></label>
+          </div>
+
+          <label>Description<textarea name="description" required rows="5" placeholder="Présentez l’objectif de l’événement, le public visé et les modalités."></textarea></label>
+
+          <div class="form-grid two">
+            <label>Formats<input name="formats" placeholder="Présentiel, Microsoft Teams, Google Meet" /></label>
+            <label>Texte bouton<input name="buttonLabel" placeholder="Réserver ma place" /></label>
+          </div>
+
+          <div class="form-grid two">
+            <label>Lien Teams<input name="teamsUrl" placeholder="https://teams.microsoft.com/..." /></label>
+            <label>Lien Google Meet<input name="meetUrl" placeholder="https://meet.google.com/..." /></label>
+          </div>
+
+          <label class="check-line"><input type="checkbox" name="featured" /> <span>Mettre en avant cet événement</span></label>
+
+          <div class="form-actions">
+            <button class="danger-button" type="button" data-delete-event>Supprimer</button>
+            <button class="soft-button" type="button" data-reset-form>Réinitialiser</button>
+            <button class="primary-button" type="submit">Enregistrer</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel registrations-panel">
+        <div class="panel-head split">
+          <div>
+            <h2>Inscriptions reçues</h2>
+            <small>Liste alimentée quand un visiteur réserve depuis le site.</small>
+          </div>
+          <a class="soft-button" data-export-csv href="/api/admin/registrations.csv" target="_blank" rel="noopener">Exporter CSV</a>
+        </div>
+        <div class="registration-list" data-registration-list></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="login-layer is-visible" data-login-layer>
+    <form class="login-card" data-login-form>
+      <img src="assets/sgf-mark.svg" alt="" />
+      <p class="eyebrow">Accès sécurisé</p>
+      <h2>Administration SGF Events</h2>
+      <p>Entrez le mot de passe administrateur défini dans le backend.</p>
+      <input type="password" name="password" placeholder="Mot de passe administrateur" autocomplete="current-password" required />
+      <button class="primary-button" type="submit">Se connecter</button>
+      <small data-login-error></small>
+    </form>
+  </div>
+
+  <div class="toast" data-toast role="status" aria-live="polite"></div>
+  <script src="scripts/admin.js" defer></script>
+</body>
+</html>
