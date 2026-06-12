@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="title desc">
+  <title id="title">SGF Group mark</title>
+  <desc id="desc">Monogramme SGF dans un carré arrondi premium.</desc>
+  <defs>
+    <linearGradient id="g" x1="22" y1="18" x2="140" y2="146" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFF7DD"/>
+      <stop offset="0.42" stop-color="#D7B15F"/>
+      <stop offset="1" stop-color="#8B6C2F"/>
+    </linearGradient>
+    <linearGradient id="b" x1="18" y1="15" x2="146" y2="150" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1F3A60"/>
+      <stop offset="1" stop-color="#071B33"/>
+    </linearGradient>
+  </defs>
+  <rect x="12" y="12" width="136" height="136" rx="34" fill="url(#b)"/>
+  <path d="M45 105V54h31c9 0 16 3 21 9 5 5 8 12 8 21 0 7-2 13-7 18-5 5-11 8-19 8H61v22H45Zm16-36h17c3 0 6-1 8-4 2-2 3-5 3-9s-1-7-3-9c-2-2-5-3-8-3H61v25Z" fill="url(#g)" opacity=".95"/>
+  <path d="M101 47h22v22h-22zM101 80h22v33h-22z" fill="url(#g)" opacity=".72"/>
+  <path d="M38 125h84" stroke="#D7B15F" stroke-width="4" stroke-linecap="round" opacity=".7"/>
+</svg>
